@@ -18,18 +18,19 @@ bool mas[8][12] = {
 
 
 //из calculatePath получаем массив с координатами
-Cell kor = {(2,1),(6,5)};
 
 
 
 
-void Lishnie(Cell start,Cell end /*mas[8][12]*/ ){
+
+//void Lishnie(/*Cell start,Cell end ,*/ Cell[] kor/*mas[8][12]*/ ){
+void Lishnie( Cell[] kor ){  
+  
   bool zn = 0;
 
-for (int i = 0; i < (sizeof(kor) /  sizeof(kor[0]));  i++){
-  
-int start = kor[i];
-int end = kor[i+1];
+for (int i = 0; i < int (sizeof(kor)/sizeof(Cell));  i++){
+Cell start = kor[i];
+Cell end = kor[i+1];
 
 
 if (mas[end.col+2][end.row]==1){
@@ -67,8 +68,9 @@ else{
 
 void setup() {
   // put your setup code here, to run once:
+  Cell kor = {(2,1),(6,5)};
   Serial.begin(9600);
-   Lishnie({2,1},{6,5});
+  Lishnie(/*{2,1},{6,5},*/Cell[] {(2,1),(6,5)});
   Serial.print(mas[8][12]);
 }
 
