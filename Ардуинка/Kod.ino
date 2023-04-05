@@ -1,6 +1,10 @@
 struct Cell {
-int row; //y
-int col; //x
+int row;
+int col;
+void setVal(int newRow, int newCol){
+row = newRow;
+col = newCol;
+}
 };
 
 bool mas[8][12] = {
@@ -19,46 +23,75 @@ bool mas[8][12] = {
 
 //из calculatePath получаем массив с координатами
 
+void setup() {
+  // put your setup code here, to run once:
+  Cell kor[10];
+  kor[0].setVal(2,1);
+  kor[1].setVal(2,2);   
+  
+  Serial.begin(9600);
+  Lishnie(kor);
+  for (int i = 0;i<9;i++){
+    for(int u = 0;u<13;u++){
+        Serial.print(mas[i][u]);                    
+    }    
+    Serial.println();  
+}
 
+}
 
 
 
 //void Lishnie(/*Cell start,Cell end ,*/ Cell[] kor/*mas[8][12]*/ ){
-void Lishnie( Cell[] kor ){  
+void Lishnie( Cell kor[] ){  
+  Cell start1;
+//Serial.print(100);
+
+  Cell end1;  
+bool zn = 0;
+
+
+
+
+for (int i = 0; i < int (sizeof(kor)*4/sizeof(Cell))-1;  i++){
   
-  bool zn = 0;
+start1 = kor[i];
+/*Serial.print(start1.row);
+Serial.print(" ");
+Serial.println(start1.col);*/
 
-for (int i = 0; i < int (sizeof(kor)/sizeof(Cell));  i++){
-Cell start = kor[i];
-Cell end = kor[i+1];
+end1 = kor[i+1];
+/*Serial.print(end1.row);
+Serial.print(" ");
+Serial.println(end1.col);*/
 
 
-if (mas[end.col+2][end.row]==1){
+if (mas[end1.col+2][end1.row]==1){
   //двигаем лишнее, двигаем фигуру хода
-  if (end.col!=  7+2   and end.row!=  0   and zn ==0){if (mas[end.col+2+1][end.row+1]==0){
+  if (end1.col!=  7+2   and end1.row!=  0   and zn ==0){if (mas[end1.col+2+1][end1.row+1]==0){
     zn = 1;
-    mas[end.col+2+1][end.row+1]=1;
-    mas[end.col+2][end.row]=0;}}
+    mas[end1.col+2+1][end1.row+1]=1;
+    mas[end1.col+2][end1.row]=0;}}
 
-  if (end.col!=  7+2   and end.row!=  7   and zn ==0){if (mas[end.col+2+1][end.row+1]==0){
+  if (end1.col!=  7+2   and end1.row!=  7   and zn ==0){if (mas[end1.col+2+1][end1.row+1]==0){
     zn = 1;
-    mas[end.col+2+1][end.row+1]=1
-    ;mas[end.col+2][end.row]=0;}}
+    mas[end1.col+2+1][end1.row+1]=1;
+    mas[end1.col+2][end1.row]=0;}}
 
-  if (end.col!=  2   and end.row!=  0   and zn ==0){if (mas[end.col+2+1][end.row+1]==0){
+  if (end1.col!=  2   and end1.row!=  0   and zn ==0){if (mas[end1.col+2+1][end1.row+1]==0){
     zn = 1;
-    mas[end.col+2+1][end.row+1]=1;
-    mas[end.col+2][end.row]=0;}}
+    mas[end1.col+2+1][end1.row+1]=1;
+    mas[end1.col+2][end1.row]=0;}}
 
-  if (end.col!=  2   and end.row!=  7   and zn ==0){if (mas[end.col+2+1][end.row+1]==0){
+  if (end1.col!=  2   and end1.row!=  7   and zn ==0){if (mas[end1.col+2+1][end1.row+1]==0){
     zn = 1;
-    mas[end.col+2+1][end.row+1]=1;
-    mas[end.col+2][end.row]=0;}}
+    mas[end1.col+2+1][end1.row+1]=1;
+    mas[end1.col+2][end1.row]=0;}}
 }
 else{
   //двигаем фигуру хода
-  mas[end.col+2][end.row] = 1;
-  mas[start.col+2][start.row] = 0;
+  mas[end1.col+2][end1.row] = 1;
+  mas[start1.col+2][start1.row] = 0;
 }
 
 }
@@ -66,13 +99,7 @@ else{
 }
 
 
-void setup() {
-  // put your setup code here, to run once:
-  Cell kor = {(2,1),(6,5)};
-  Serial.begin(9600);
-  Lishnie(/*{2,1},{6,5},*/Cell[] {(2,1),(6,5)});
-  Serial.print(mas[8][12]);
-}
+
 
 void loop() {
   // put your main code here, to run repeatedly:
