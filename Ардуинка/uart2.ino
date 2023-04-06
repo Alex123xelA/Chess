@@ -25,15 +25,15 @@ bool mas[8][12] = {
 
 void setup() {
   // put your setup code here, to run once:
-  Cell kor[7];
-  kor[0].setVal(0,0);
-  kor[1].setVal(0,1);
-  kor[2].setVal(0,2);
-  kor[3].setVal(0,3);
-  kor[4].setVal(0,5);
-  kor[5].setVal(0,6);
-  kor[6].setVal(0,7);
-  kor[7].setVal(0,8); 
+  Cell kor[4];
+  kor[0].setVal(5,4);
+  kor[1].setVal(5,5);
+  kor[2].setVal(5,6);
+  kor[3].setVal(6,6);
+  //kor[4].setVal(0,5);
+  //kor[5].setVal(0,6);
+  //kor[6].setVal(0,7);
+  //kor[7].setVal(0,8); 
 
   int lk = sizeof(kor)/sizeof(Cell);
   
@@ -131,44 +131,44 @@ if (mas[end1.col][end1.row]==1){
     if (mas[2][1]==0 and zn==0){zn=1;per[i][1].setVal(2,0);per[i][2].setVal(2,1);}
     if (mas[3][0]==0 and zn==0){zn=1;per[i][1].setVal(2,0);per[i][2].setVal(3,0);}
     if (mas[3][1]==0 and zn==0){zn=1;per[i][1].setVal(2,0);per[i][2].setVal(8,7);}
-  }
+  }//---------------------------------------
   if (end1.col==0){
-    if (mas[end1.col][end1.row+2+1]==0 and zn==0){zn=1;}
-    if (mas[end1.col][end1.row+2-1]==0 and zn==0){zn=1;}
-    if (mas[end1.col+1][end1.row+2]==0 and zn==0){zn=1;}
-    if (mas[end1.col+1][end1.row+2+1]==0 and zn==0){zn=1;}
-    if (mas[end1.col-1][end1.row+2-1]==0 and zn==0){zn=1;}
+    if (mas[end1.col][end1.row+2+1]==0 and zn==0){zn=1;per[i][1].setVal(end1.col,end1.row+2);per[i][2].setVal(end1.col,end1.row+2+1);}
+    if (mas[end1.col][end1.row+2-1]==0 and zn==0){zn=1;per[i][1].setVal(end1.col,end1.row+2);per[i][2].setVal(end1.col,end1.row+2-1);}
+    if (mas[end1.col+1][end1.row+2]==0 and zn==0){zn=1;per[i][1].setVal(end1.col,end1.row+2);per[i][2].setVal(end1.col+1,end1.row+2);}
+    if (mas[end1.col+1][end1.row+2+1]==0 and zn==0){zn=1;per[i][1].setVal(end1.col,end1.row+2);per[i][2].setVal(end1.col+1,end1.row+2+1);}
+    if (mas[end1.col-1][end1.row+2-1]==0 and zn==0){zn=1;per[i][1].setVal(end1.col,end1.row+2);per[i][2].setVal(end1.col-1,end1.row+2-1);}
     }
   if (end1.col==7){
-    if (mas[end1.col][end1.row+2-1]==0 and zn==0){zn=1;}
-    if (mas[end1.col][end1.row+2+1]==0 and zn==0){zn=1;}
-    if (mas[end1.col-1][end1.row+2-1]==0 and zn==0){zn=1;}
-    if (mas[end1.col-1][end1.row+2+1]==0 and zn==0){zn=1;}
-    if (mas[end1.col-1][end1.row+2]==0 and zn==0){zn=1;}
+    if (mas[end1.col][end1.row+2-1]==0 and zn==0){zn=1;per[i][1].setVal(end1.col,end1.row+2);per[i][2].setVal(end1.col,end1.row+2-1);}
+    if (mas[end1.col][end1.row+2+1]==0 and zn==0){zn=1;per[i][1].setVal(end1.col,end1.row+2);per[i][2].setVal(end1.col,end1.row+2+1);}
+    if (mas[end1.col-1][end1.row+2-1]==0 and zn==0){zn=1;per[i][1].setVal(end1.col,end1.row+2);per[i][2].setVal(end1.col-1,end1.row+2-1);}
+    if (mas[end1.col-1][end1.row+2+1]==0 and zn==0){zn=1;per[i][1].setVal(end1.col,end1.row+2);per[i][2].setVal(end1.col-1,end1.row+2+1);}
+    if (mas[end1.col-1][end1.row+2]==0 and zn==0){zn=1;per[i][1].setVal(end1.col,end1.row+2);per[i][2].setVal(end1.col-1,end1.row+2);}
     }
   if (end1.row==0){
-    if (mas[end1.col+1][end1.row+2]==0 and zn==0){zn=1;}
-    if (mas[end1.col-1][end1.row+2]==0 and zn==0){zn=1;}
-    if (mas[end1.col+1][end1.row+2+1]==0 and zn==0){zn=1;}
-    if (mas[end1.col-1][end1.row+2+1]==0 and zn==0){zn=1;}
-    if (mas[end1.col][end1.row+2+1]==0 and zn==0){zn=1;}
+    if (mas[end1.col+1][end1.row+2]==0 and zn==0){zn=1;per[i][1].setVal(end1.col,end1.row+2);per[i][2].setVal(end1.col+1,end1.row+2);}
+    if (mas[end1.col-1][end1.row+2]==0 and zn==0){zn=1;per[i][1].setVal(end1.col,end1.row+2);per[i][2].setVal(end1.col-1,end1.row+2);}
+    if (mas[end1.col+1][end1.row+2+1]==0 and zn==0){zn=1;per[i][1].setVal(end1.col,end1.row+2);per[i][2].setVal(end1.col+1,end1.row+2+1);}
+    if (mas[end1.col-1][end1.row+2+1]==0 and zn==0){zn=1;per[i][1].setVal(end1.col,end1.row+2);per[i][2].setVal(end1.col-1,end1.row+2+1);}
+    if (mas[end1.col][end1.row+2+1]==0 and zn==0){zn=1;per[i][1].setVal(end1.col,end1.row+2);per[i][2].setVal(end1.col,end1.row+2+1);}
     }
   if (end1.row==7){
-    if (mas[end1.col+1][end1.row+2]==0 and zn==0){zn=1;}
-    if (mas[end1.col-1][end1.row+2]==0 and zn==0){zn=1;}
-    if (mas[end1.col+1][end1.row+2-1]==0 and zn==0){zn=1;}
-    if (mas[end1.col-1][end1.row+2-1]==0 and zn==0){zn=1;}
-    if (mas[end1.col][end1.row+2-1]==0 and zn==0){zn=1;}
+    if (mas[end1.col+1][end1.row+2]==0 and zn==0){zn=1;per[i][1].setVal(end1.col,end1.row+2);per[i][2].setVal(end1.col+1,end1.row+2);}
+    if (mas[end1.col-1][end1.row+2]==0 and zn==0){zn=1;per[i][1].setVal(end1.col,end1.row+2);per[i][2].setVal(end1.col-1,end1.row+2);}
+    if (mas[end1.col+1][end1.row+2-1]==0 and zn==0){zn=1;per[i][1].setVal(end1.col,end1.row+2);per[i][2].setVal(end1.col+1,end1.row+2-1);}
+    if (mas[end1.col-1][end1.row+2-1]==0 and zn==0){zn=1;per[i][1].setVal(end1.col,end1.row+2);per[i][2].setVal(end1.col-1,end1.row+2-1);}
+    if (mas[end1.col][end1.row+2-1]==0 and zn==0){zn=1;per[i][1].setVal(end1.col,end1.row+2);per[i][2].setVal(end1.col,end1.row+2-1);}
     }
   if (zn==0){
-    if(mas[end1.col+1][end1.row+2]==0){zn=1;}
-    if(mas[end1.col+1][end1.row+2+1]==0){zn=1;}
-    if(mas[end1.col+1][end1.row+2-1]==0){zn=1;}
-    if(mas[end1.col-1][end1.row+2]==0){zn=1;}
-    if(mas[end1.col-1][end1.row+2-1]==0){zn=1;}
-    if(mas[end1.col-1][end1.row+2+1]==0){zn=1;}
-    if(mas[end1.col][end1.row+2+1]==0){zn=1;}
-    if(mas[end1.col][end1.row+2-1]==0){zn=1;}
+    if(mas[end1.col+1][end1.row+2]==0){zn=1;per[i][1].setVal(end1.col,end1.row+2);per[i][2].setVal(end1.col+1,end1.row+2);}
+    if(mas[end1.col+1][end1.row+2+1]==0){zn=1;per[i][1].setVal(end1.col,end1.row+2);per[i][2].setVal(end1.col+1,end1.row+2+1);}
+    if(mas[end1.col+1][end1.row+2-1]==0){zn=1;per[i][1].setVal(end1.col,end1.row+2);per[i][2].setVal(end1.col+1,end1.row+2-1);}
+    if(mas[end1.col-1][end1.row+2]==0){zn=1;per[i][1].setVal(end1.col,end1.row+2);per[i][2].setVal(end1.col-1,end1.row+2);}
+    if(mas[end1.col-1][end1.row+2-1]==0){zn=1;per[i][1].setVal(end1.col,end1.row+2);per[i][2].setVal(end1.col-1,end1.row+2-1);}
+    if(mas[end1.col-1][end1.row+2+1]==0){zn=1;per[i][1].setVal(end1.col,end1.row+2);per[i][2].setVal(end1.col-1,end1.row+2+1);}
+    if(mas[end1.col][end1.row+2+1]==0){zn=1;per[i][1].setVal(end1.col,end1.row+2);per[i][2].setVal(end1.col,end1.row+2+1);}
+    if(mas[end1.col][end1.row+2-1]==0){zn=1;per[i][1].setVal(end1.col,end1.row+2);per[i][2].setVal(end1.col,end1.row+2-1);}
     }
 }
 else{
@@ -176,9 +176,9 @@ else{
   mas[end1.col][end1.row]=1;   }
 
   
-for (int i = 0;i<9;i++){
-    for(int u = 0;u<13;u++){
-        Serial.print(mas[i][u]);                    
+for (int p = 0;p<9;p++){
+    for(int u = 1;u<3;u++){
+        Serial.print(per[p][u].);                    
     }    
     Serial.println();  
 }
