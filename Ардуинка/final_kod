@@ -1,0 +1,430 @@
+struct Cell {
+int row;
+int col;
+void setVal(int newRow, int newCol){
+row = newRow;
+col = newCol;
+}
+};
+
+bool mas[8][12] = {
+  {0,0, 1,1,1,1,1,1,1,1, 0,0},
+  {0,0, 1,1,1,1,1,1,1,1, 0,0},
+  {0,0, 0,0,0,0,0,0,0,0, 0,0},
+  {0,0, 0,0,0,0,0,0,0,0, 0,0},
+  {0,0, 0,1,0,0,0,0,0,0, 0,0},
+  {0,0, 0,1,0,0,0,0,0,0, 0,0},
+  {0,0, 1,1,1,1,1,1,1,1, 0,0},
+  {0,0, 1,1,1,1,1,1,1,1 ,0,0}
+};
+
+
+const int MAX_PATH_LENGTH = 64;
+
+
+int getAbs(int value) {
+return value >= 0 ? value : -value;
+}
+
+int getSign(int value) {
+return value >= 0 ? 1 : -1;
+}
+
+void calculatePath(Cell start, Cell end, Cell path[MAX_PATH_LENGTH], int& pathLength) {
+int dx = getAbs(end.col - start.col);
+int dy = getAbs(end.row - start.row);
+int sx = getSign(end.col - start.col);
+int sy = getSign(end.row - start.row);
+
+pathLength = 0;
+
+if (dx == 0 && dy == 0) {
+
+path[pathLength++] = start;
+return;
+}
+
+int err = dx - dy;
+Cell cur = start;
+while (true) {
+path[pathLength++] = cur;
+if (cur.row == end.row && cur.col == end.col) {
+return;
+}
+int e2 = 2 * err;
+if (e2 > -dy) {
+err -= dy;
+cur.col += sx;
+}
+if (e2 < dx) {
+err += dx;
+cur.row += sy;
+}
+}
+}
+
+Cell hod1[2];
+
+Cell raspinput(){
+//"(6,2),(6,2)"
+Cell a;
+Cell b;
+ // if (Serial.available() > 0) {
+//String data = Serial.readStringUntil('\n');
+ //a.setVal(int( data[6]),int( data[3]));
+ //b.setVal(int( data[7]),int( data[9]));
+//return  a , b;
+
+a.setVal(int(3 ),int(6 ));
+b.setVal(int(3 ),int(3 ));
+
+/*Serial.print(a.col);
+Serial.print(" ");
+Serial.print(a.row);
+Serial.print(" ");
+Serial.print(b.col);
+Serial.print(" ");
+Serial.print(b.row);
+Serial.println();*/
+
+
+
+hod1[0]=a;
+hod1[1]=b; 
+return  hod1[2];
+}
+//}
+
+
+
+
+
+void peredvigenie(Cell re){
+
+int dirPin1 = 4;
+int stepPin1 = 5;
+int dirPin2 = 2;
+int stepPin2 = 3;
+int stepsPerRevolution = 90;
+int x = 0;
+int y = 0;
+int xpos = 0;
+int ypos = 0;
+int j = 0;
+int p = 0;
+int f = 0;
+
+pinMode(stepPin1, OUTPUT);
+pinMode(dirPin1, OUTPUT);
+pinMode(stepPin2, OUTPUT);
+pinMode(dirPin2, OUTPUT);
+
+x = re.row;
+y = re.col;
+
+//x = (x-48) ;
+//y = (y-48);
+
+Serial.println(x);
+Serial.println(y);
+Serial.println(xpos);
+Serial.println(ypos);
+int xpos1 = x;
+int ypos2 = y;// Медленное вращение двигателя
+x = x -xpos;
+y = y-ypos;
+xpos = xpos1;
+ypos = ypos2;
+if (x>0){
+digitalWrite(dirPin1, LOW);
+for(int i = 0; i < stepsPerRevolution*x; i++)
+{
+digitalWrite(stepPin1, HIGH);
+delayMicroseconds(2000);
+digitalWrite(stepPin1, LOW);
+delayMicroseconds(2000);
+}
+
+}
+delay(1000);
+if (x<0){
+x = x*(-1);
+digitalWrite(dirPin1, HIGH);
+for(int i = 0; i < stepsPerRevolution*x; i++)
+{
+digitalWrite(stepPin1, HIGH);
+delayMicroseconds(2000);
+digitalWrite(stepPin1, LOW);
+delayMicroseconds(2000);
+}
+
+}
+delay(1000);
+if (y>0){
+digitalWrite(dirPin2, HIGH);
+for(int i = 0; i < stepsPerRevolution*y; i++)
+{
+digitalWrite(stepPin2, HIGH);
+delayMicroseconds(2000);
+digitalWrite(stepPin2, LOW);
+delayMicroseconds(2000);
+}
+
+}
+delay(1000);
+if (y<0){
+y = y*(-1);
+digitalWrite(dirPin2, LOW);
+for(int i = 0; i < stepsPerRevolution*y; i++)
+{
+digitalWrite(stepPin2, HIGH);
+delayMicroseconds(2000);
+digitalWrite(stepPin2, LOW);
+delayMicroseconds(2000);
+}
+
+}
+delay(1000);
+if (x < 0){x = x * (-1);}
+if (y < 0){y = y * (-1);}
+
+
+
+Serial.println(xpos);
+Serial.println(ypos);
+Serial.println(x);
+Serial.println(y);
+
+x = 0;
+y = 0;
+delay(1000);
+}
+
+//из calculatePath получаем массив с координатами
+
+void setup() {
+  Serial.begin(9600);
+  // put your setup code here, to run once:
+  /*Cell kor[4];
+  kor[0].setVal(3,6);
+  kor[1].setVal(3,5);
+  kor[2].setVal(3,4);
+  kor[3].setVal(3,3);
+
+
+  int lk = sizeof(kor)/sizeof(Cell);
+  
+  Serial.begin(9600);
+  Lishnie(kor,lk);
+  for (int i = 0;i<=7;i++){
+    for(int u = 0;u<=11;u++){
+        Serial.print(mas[i][u]);                    
+    }    
+    Serial.println();  
+}*/
+
+}
+
+void fromto(int a1, int b1, int a2,int b2){
+  Cell from1;
+  Cell to1;
+  from1.setVal(b1,a1);
+  to1.setVal(b2,a2);
+
+  
+  peredvigenie(from1);
+  //digitalWrite(magnet 7,HIGH);
+  peredvigenie(to1);
+  //digitalWrite(magnet 7,LOW);  
+
+}
+ 
+
+
+
+
+void Lishnie( Cell kor[] , int lk){  
+  Cell start1;
+  Cell end1;
+    
+bool zn = 0;
+int dob = 0;
+
+Cell per[lk+5][2];
+
+
+
+
+
+
+
+for (int i = 0;i<=lk-1;  i++){
+zn = 0;
+  
+start1 = kor[i];
+
+end1 = kor[i+1];
+
+
+  
+
+if (mas[end1.col][end1.row]==1){
+  if (end1.row==7 and end1.col==0){
+    if (mas[end1.row-1+2][end1.col]==0 and zn==0){zn=1;per[dob][1].setVal(end1.row+2,end1.col);per[dob][2].setVal(end1.row-1+2,end1.col);dob++;
+    }
+    if
+    (mas[end1.row+2][end1.col+1]==0 and zn==0){zn=1;per[dob][1].setVal(end1.row+2,end1.col);per[dob][2].setVal(end1.row+2,end1.col+1);dob++;
+    }
+    if (mas[8][1]==0 and zn==0){zn=1;per[dob][1].setVal(9,0);per[dob][2].setVal(8,1);dob++;}
+    }
+  if (end1.row==7 and end1.col==7){
+    if (mas[9][6]==0 and zn==0){zn=1;per[dob][1].setVal(9,7);per[dob][2].setVal(9,6);dob++;}
+    if (mas[8][7]==0 and zn==0){zn=1;per[dob][1].setVal(9,7);per[dob][2].setVal(8,7);dob++;}
+    if (mas[8][6]==0 and zn==0){zn=1;per[dob][1].setVal(9,7);per[dob][2].setVal(8,6);dob++;}
+  }
+  if (end1.row==0 and end1.col==7){
+    if (mas[3][7]==0 and zn==0){zn=1;per[dob][1].setVal(2,7);per[dob][2].setVal(3,7);dob++;}
+    if (mas[2][6]==0 and zn==0){zn=1;per[dob][1].setVal(2,7);per[dob][2].setVal(2,6);dob++;}
+    if (mas[3][6]==0 and zn==0){zn=1;per[dob][1].setVal(2,7);per[dob][2].setVal(8,7);dob++;}
+  }
+  if (end1.row==0 and end1.col==0){
+    if (mas[2][1]==0 and zn==0){zn=1;per[dob][1].setVal(2,0);per[dob][2].setVal(2,1);dob++;}
+    if (mas[3][0]==0 and zn==0){zn=1;per[dob][1].setVal(2,0);per[dob][2].setVal(3,0);dob++;}
+    if (mas[3][1]==0 and zn==0){zn=1;per[dob][1].setVal(2,0);per[dob][2].setVal(8,7);dob++;}
+  }//---------------------------------------
+  if (end1.col==0){
+    if (mas[end1.col][end1.row+2+1]==0 and zn==0){zn=1;per[dob][1].setVal(start1.row+2,start1.col);per[dob][2].setVal(end1.row+2+1,end1.col); dob++;  mas[start1.col][start1.row]=0;mas[end1.col][end1.row]=1;mas[end1.col][end1.row+1+1]=1; fromto( end1.col,end1.row,end1.col,end1.row+1+1); fromto(start1.col,start1.row,end1.col,end1.row);}
+    if (mas[end1.col][end1.row+2-1]==0 and zn==0){zn=1;per[dob][1].setVal(start1.row+2,start1.col);per[dob][2].setVal(end1.row+2-1,end1.col); dob++;  mas[start1.col][start1.row]=0;mas[end1.col][end1.row]=1;mas[end1.col][end1.row+1-1]=1; fromto( end1.col,end1.row,end1.col,end1.row+1-1); fromto(start1.col,start1.row,end1.col,end1.row);}
+    if (mas[end1.col+1][end1.row+2]==0 and zn==0){zn=1;per[dob][1].setVal(start1.row+2,start1.col);per[dob][2].setVal(end1.row+2,end1.col+1); dob++;  mas[start1.col][start1.row]=0;mas[end1.col][end1.row]=1;mas[end1.col+1][end1.row+1]=1; fromto( end1.col,end1.row,end1.col+1,end1.row+1); fromto(start1.col,start1.row,end1.col,end1.row);}
+    if (mas[end1.col+1][end1.row+2+1]==0 and zn==0){zn=1;per[dob][1].setVal(start1.row+2,start1.col);per[dob][2].setVal(end1.row+2+1,end1.col+1); dob++;  mas[start1.col][start1.row]=0;mas[end1.col][end1.row]=1;mas[end1.col+1][end1.row+1+1]=1; fromto( end1.col,end1.row,end1.col+1,end1.row+1+1); fromto(start1.col,start1.row,end1.col,end1.row);}
+    if (mas[end1.col-1][end1.row+2-1]==0 and zn==0){zn=1;per[dob][1].setVal(start1.row+2,start1.col);per[dob][2].setVal(end1.row+2-1,end1.col-1); dob++;  mas[start1.col][start1.row]=0;mas[end1.col][end1.row]=1;mas[end1.col-1][end1.row+1-1]=1; fromto( end1.col,end1.row,end1.col-1,end1.row+1-1); fromto(start1.col,start1.row,end1.col,end1.row);}
+    }
+  if (end1.col==7){
+    if (mas[end1.col][end1.row+2-1]==0 and zn==0){zn=1;per[dob][1].setVal(start1.row+2,start1.col);per[dob][2].setVal(end1.row+2-1,end1.col); dob++;  mas[start1.col][start1.row]=0;mas[end1.col][end1.row]=1;mas[end1.col][end1.row+1-1]=1; fromto( end1.col,end1.row,end1.col,end1.row+1-1); fromto(start1.col,start1.row,end1.col,end1.row);}
+    if (mas[end1.col][end1.row+2+1]==0 and zn==0){zn=1;per[dob][1].setVal(start1.row+2,start1.col);per[dob][2].setVal(end1.row+2+1,end1.col); dob++;  mas[start1.col][start1.row]=0;mas[end1.col][end1.row]=1;mas[end1.col][end1.row+1+1]=1; fromto( end1.col,end1.row,end1.col,end1.row+1+1); fromto(start1.col,start1.row,end1.col,end1.row);}
+    if (mas[end1.col-1][end1.row+2-1]==0 and zn==0){zn=1;per[dob][1].setVal(start1.row+2,start1.col);per[dob][2].setVal(end1.row+2-1,end1.col-1); dob++;  mas[start1.col][start1.row]=0;mas[end1.col][end1.row]=1;mas[end1.col-1][end1.row+1-1]=1; fromto( end1.col,end1.row,end1.col-1,end1.row+1-1); fromto(start1.col,start1.row,end1.col,end1.row);}
+    if (mas[end1.col-1][end1.row+2+1]==0 and zn==0){zn=1;per[dob][1].setVal(start1.row+2,start1.col);per[dob][2].setVal(end1.row+2+1,end1.col-1); dob++;  mas[start1.col][start1.row]=0;mas[end1.col][end1.row]=1;mas[end1.col-1][end1.row+1+1]=1; fromto( end1.col,end1.row,end1.col-1,end1.row+1+1); fromto(start1.col,start1.row,end1.col,end1.row);}
+    if (mas[end1.col-1][end1.row+2]==0 and zn==0){zn=1;per[dob][1].setVal(start1.row+2,start1.col);per[dob][2].setVal(end1.row+2,end1.col-1); dob++;  mas[start1.col][start1.row]=0;mas[end1.col][end1.row]=1;mas[end1.col-1][end1.row+1]=1; fromto( end1.col,end1.row,end1.col-1,end1.row+1); fromto(start1.col,start1.row,end1.col,end1.row);}
+    }
+  if (end1.row==0){
+    if (mas[end1.col+1][end1.row+2]==0 and zn==0){zn=1;per[dob][1].setVal(start1.row+2,start1.col);per[dob][2].setVal(end1.row+2,end1.col+1); dob++;  mas[start1.col][start1.row]=0;mas[end1.col][end1.row]=1;mas[end1.col+1][end1.row+1]=1; fromto( end1.col,end1.row,end1.col+1,end1.row+1); fromto(start1.col,start1.row,end1.col,end1.row);}
+    if (mas[end1.col-1][end1.row+2]==0 and zn==0){zn=1;per[dob][1].setVal(start1.row+2,start1.col);per[dob][2].setVal(end1.row+2,end1.col-1); dob++;  mas[start1.col][start1.row]=0;mas[end1.col][end1.row]=1;mas[end1.col-1][end1.row+1]=1; fromto( end1.col,end1.row,end1.col-1,end1.row+1); fromto(start1.col,start1.row,end1.col,end1.row);}
+    if (mas[end1.col+1][end1.row+2+1]==0 and zn==0){zn=1;per[dob][1].setVal(start1.row+2,start1.col);per[dob][2].setVal(end1.row+2+1,end1.col+1); dob++;  mas[start1.col][start1.row]=0;mas[end1.col][end1.row]=1;mas[end1.col+1][end1.row+1+1]=1; fromto( end1.col,end1.row,end1.col+1,end1.row+1+1); fromto(start1.col,start1.row,end1.col,end1.row);}
+    if (mas[end1.col-1][end1.row+2+1]==0 and zn==0){zn=1;per[dob][1].setVal(start1.row+2,start1.col);per[dob][2].setVal(end1.row+2+1,end1.col-1); dob++;  mas[start1.col][start1.row]=0;mas[end1.col][end1.row]=1;mas[end1.col-1][end1.row+1+1]=1; fromto( end1.col,end1.row,end1.col-1,end1.row+1+1); fromto(start1.col,start1.row,end1.col,end1.row);}
+    if (mas[end1.col][end1.row+2+1]==0 and zn==0){zn=1;per[dob][1].setVal(start1.row+2,start1.col);per[dob][2].setVal(end1.row+2+1,end1.col); dob++;  mas[start1.col][start1.row]=0;mas[end1.col][end1.row]=1;mas[end1.col][end1.row+1+1]=1; fromto( end1.col,end1.row,end1.col,end1.row+1+1); fromto(start1.col,start1.row,end1.col,end1.row);}
+    }
+  if (end1.row==7){
+    if (mas[end1.col+1][end1.row+2]==0 and zn==0){zn=1;per[dob][1].setVal(start1.row+2,start1.col);per[dob][2].setVal(end1.row+2,end1.col+1); dob++;  mas[start1.col][start1.row]=0;mas[end1.col][end1.row]=1;mas[end1.col+1][end1.row+1]=1; fromto( end1.col,end1.row,end1.col+1,end1.row+1); fromto(start1.col,start1.row,end1.col,end1.row);}
+    if (mas[end1.col-1][end1.row+2]==0 and zn==0){zn=1;per[dob][1].setVal(start1.row+2,start1.col);per[dob][2].setVal(end1.row+2,end1.col-1); dob++;  mas[start1.col][start1.row]=0;mas[end1.col][end1.row]=1;mas[end1.col-1][end1.row+1]=1; fromto( end1.col,end1.row,end1.col-1,end1.row+1); fromto(start1.col,start1.row,end1.col,end1.row);}
+    if (mas[end1.col+1][end1.row+2-1]==0 and zn==0){zn=1;per[dob][1].setVal(start1.row+2,start1.col);per[dob][2].setVal(end1.row+2-1,end1.col+1); dob++;  mas[start1.col][start1.row]=0;mas[end1.col][end1.row]=1;mas[end1.col+1][end1.row+1-1]=1; fromto( end1.col,end1.row,end1.col+1,end1.row+1-1); fromto(start1.col,start1.row,end1.col,end1.row);}
+    if (mas[end1.col-1][end1.row+2-1]==0 and zn==0){zn=1;per[dob][1].setVal(start1.row+2,start1.col);per[dob][2].setVal(end1.row+2-1,end1.col-1); dob++;  mas[start1.col][start1.row]=0;mas[end1.col][end1.row]=1;mas[end1.col-1][end1.row+1-1]=1; fromto( end1.col,end1.row,end1.col-1,end1.row+1-1); fromto(start1.col,start1.row,end1.col,end1.row);}
+    if (mas[end1.col][end1.row+2-1]==0 and zn==0){zn=1;per[dob][1].setVal(start1.row+2,start1.col);per[dob][2].setVal(end1.row+2-1,end1.col); dob++;  mas[start1.col][start1.row]=0;mas[end1.col][end1.row]=1;mas[end1.col][end1.row+1-1]=1; fromto( end1.col,end1.row,end1.col,end1.row+1-1); fromto(start1.col,start1.row,end1.col,end1.row);}
+    }
+  if (zn==0){
+    Cell t; 
+    if(mas[end1.col+1][end1.row+1]==0 and zn==0){zn=1;per[dob][1].setVal(end1.row,end1.col);per[dob][2].setVal(end1.row +1,end1.col+1); dob++;  mas[start1.col][start1.row]=0;mas[end1.col][end1.row]=1;mas[end1.col+1][end1.row+1]=1; fromto( end1.col,end1.row,end1.col+1,end1.row+1); fromto(start1.col,start1.row,end1.col,end1.row);}
+    if(mas[end1.col+1][end1.row+1+1]==0 and zn==0){zn=1;per[dob][1].setVal(end1.row,end1.col);per[dob][2].setVal(end1.row+1+1,end1.col+1); dob++; mas[start1.col][start1.row]=0;mas[end1.col][end1.row]=1;mas[end1.col+1][end1.row+1+1]=1; fromto( end1.col,end1.row,end1.col+1,end1.row+1+1); fromto(start1.col,start1.row,end1.col,end1.row);}
+    if(mas[end1.col+1][end1.row+1-1]==0 and zn==0){zn=1;per[dob][1].setVal(end1.row,end1.col);per[dob][2].setVal(end1.row-1+1,end1.col+1); dob++;  mas[start1.col][start1.row]=0;mas[end1.col][end1.row]=1;mas[end1.col+1][end1.row+1-1]=1; fromto( end1.col,end1.row,end1.col+1,end1.row+1-1); fromto(start1.col,start1.row,end1.col,end1.row);}
+    if(mas[end1.col-1][end1.row+1]==0 and zn==0){zn=1;per[dob][1].setVal(end1.row,end1.col);per[dob][2].setVal(end1.row+1,end1.col-1);  dob++;  mas[start1.col][start1.row]=0;mas[end1.col][end1.row]=1;mas[end1.col-1][end1.row+1]=1; fromto( end1.col,end1.row,end1.col-1,end1.row+1); fromto(start1.col,start1.row,end1.col,end1.row);}
+    if(mas[end1.col-1][end1.row+1-1]==0 and zn==0){zn=1;per[dob][1].setVal(end1.row,end1.col);per[dob][2].setVal(end1.row-1+1,end1.col-1);  dob++;  mas[start1.col][start1.row]=0;mas[end1.col][end1.row]=1;mas[end1.col-1][end1.row+1-1]=1; fromto( end1.col,end1.row,end1.col-1,end1.row-1); fromto(start1.col,start1.row,end1.col,end1.row);}
+    if(mas[end1.col-1][end1.row+1+1]==0 and zn==0){zn=1;per[dob][1].setVal(end1.row,end1.col);per[dob][2].setVal(end1.row+1+1,end1.col-1); dob++;   mas[start1.col][start1.row]=0;mas[end1.col][end1.row]=1;mas[end1.col-1][end1.row+1+1]=1; fromto( end1.col,end1.row,end1.col-1,end1.row+1); fromto(start1.col,start1.row,end1.col,end1.row);}
+    if(mas[end1.col][end1.row+1+1]==0 and zn==0){zn=1;per[dob][1].setVal(end1.row,end1.col);per[dob][2].setVal(end1.row+1+1,end1.col);  dob++;  mas[start1.col][start1.row]=0;mas[end1.col][end1.row]=1;mas[end1.col][end1.row+1+1]=1; fromto( end1.col,end1.row,end1.col,end1.row+1+1); fromto(start1.col,start1.row,end1.col,end1.row);}
+    if(mas[end1.col][end1.row+1-1]==0 and zn==0){zn=1;per[dob][1].setVal(end1.row,end1.col);per[dob][2].setVal(end1.row-1+1,end1.col);  dob++;  mas[start1.col][start1.row]=0;mas[end1.col][end1.row]=1;mas[end1.col][end1.row+1-1]=1; fromto( end1.col,end1.row,end1.col,end1.row+1-1); fromto(start1.col,start1.row,end1.col,end1.row);}
+    }
+  
+
+}
+else{
+  mas[start1.col][start1.row]=0;
+  mas[end1.col][end1.row]=1; 
+
+  fromto(start1.col,start1.row,end1.col,end1.row);
+ 
+
+
+
+   }
+
+
+}
+/*for (int p = 0;p<=3;p++){
+    for(int u = 1;u<=2;u++){
+        Serial.print(per[p][u].col);
+        Serial.print(" ");
+        Serial.print(per[p][u].row);
+        Serial.print(" ");                  
+    }    
+   Serial.println();   
+}*/
+
+/*for (int i = 0;i<=7;i++){
+    for(int u = 0;u<=11;u++){
+        Serial.print(mas[i][u]);                    
+    }    
+    Serial.println();  
+}
+Serial.println("------------------------------------------------");*/
+delay(500);
+
+for (int t = 0; t<=dob;t++){
+mas[per[t][1].col][per[t][1].row] = 1;
+mas[per[t][2].col][per[t][2].row] = 0;  
+}
+
+for (int i = 0;i<=7;i++){
+    for(int u = 0;u<=11;u++){
+        Serial.print(mas[i][u]);                    
+    }    
+    Serial.println();  
+}
+Serial.println("------------------------------------------------");
+
+}
+
+
+
+
+void loop() {
+
+ 
+Cell hod[2];
+raspinput( );
+
+
+
+Cell start2 =hod1[0];
+Cell end2 = hod1[1];
+Cell path[MAX_PATH_LENGTH];
+int pathLength;
+
+calculatePath(start2, end2, path, pathLength);
+int lk = sizeof(path)/sizeof(Cell);
+//Serial.println(path[1].row);
+
+
+for (int i = 0;i<=2;i++){
+    
+        Serial.print(path[i].col);
+        Serial.print(" ");
+        Serial.print(path[i].row);  
+        Serial.println();                         
+    
+    //Serial.println();  
+}
+
+Lishnie(path,lk);
+
+for (int i = 0;i<=7;i++){
+    for(int u = 0;u<=11;u++){
+        Serial.print(mas[i][u]);                    
+    }    
+    Serial.println();  
+}
+Serial.println("------------------------------------------------");
+
+
+delay(2000);
+
+}
+
+
